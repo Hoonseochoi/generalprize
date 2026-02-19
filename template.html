@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>메리츠화재 시상 대시보드</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700;900&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --red: #EF3B24;
+            --red-dark: #C42E1A;
+            --red-pale: #FFF0EE;
+            --gray: #8A8D91;
+            --gray-lt: #C8CACD;
+            --black: #1A1A1A;
+            --white: #FFFFFF;
+            --bg: #F0EEE9;
+            --card: #FAFAF8;
+            --surf: #F3F1ED;
+            --surf2: #EAE8E3;
+            --bdr: #E0DDD7;
+            --mid: #4A4A4A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            width: 1600px;
+            height: 1100px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+            color: var(--black);
+        }
+
+        /* ── HEADER ── */
+        .hd {
+            height: 60px;
+            background: var(--white);
+            border-bottom: 3px solid var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .ci-img {
+            height: 32px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* CI 이미지 */
+        .hd-c {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .hd-title {
+            font-family: 'Jua', sans-serif;
+            /* Jua 폰트 적용 */
+            font-size: 26px;
+            /* 타이틀 폰트 크기 증가 */
+            color: var(--black);
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .hd-title span {
+            color: var(--red);
+        }
+
+        .hd-sub {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--gray);
+        }
+
+        .hd-r {
+            font-size: 10px;
+            color: var(--gray);
+            text-align: right;
+        }
+
+        .hd-r strong {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--mid);
+        }
+
+        /* ── BODY ── */
+        .body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 920px 680px;
+            overflow: hidden;
+        }
+
+        /* ── LEFT ── */
+        .left {
+            background: var(--card);
+            border-right: 1px solid var(--bdr);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* 인적정보 + 총시상금 */
+        .ab {
+            background: var(--white);
+            border-bottom: 1px solid var(--bdr);
+            padding: 10px 26px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .ab-l {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .ttag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            margin-right: 10px;
+        }
+
+        .vvip {
+            background: #C9A84C;
+            color: #fff;
+        }
+
+        .gold {
+            background: #fff;
+            color: #A08840;
+            border: 1.5px solid #C9A84C;
+        }
+
+        .club {
+            background: var(--red);
+            color: white;
+        }
+
+        .entry {
+            background: var(--surf);
+            color: var(--gray);
+            border: 1px solid var(--bdr);
+        }
+
+        .aname {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            line-height: 1;
+        }
+
+        .aname small {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--gray);
+            margin-left: 4px;
+        }
+
+        .aunit {
+            font-size: 11px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .tot {
+            background: var(--red);
+            padding: 10px 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .tot-l {
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, .65);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .tot-v {
+            font-size: 26px;
+            font-weight: 900;
+            color: #fff;
+            white-space: nowrap;
+            letter-spacing: -0.5px;
+        }
+
+        /* 실적 3칸 */
+        .pr {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background: var(--white);
+            border-bottom: 1px solid var(--bdr);
+            flex-shrink: 0;
+        }
+
+        .pc {
+            padding: 8px 20px;
+            border-right: 1px solid var(--bdr);
+        }
+
+        .pc:last-child {
+            border-right: none;
+        }
+
+        .pl {
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: var(--gray);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .pv {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .pv.red {
+            color: var(--red);
+        }
+
+        .psub {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--red);
+            display: block;
+        }
+
+        .preg {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--black);
+            line-height: 1;
+        }
+
+        .preg-sub {
+            font-size: 10px;
+            color: var(--gray);
+            margin-top: 3px;
+            display: block;
+        }
+
+        /* ── 5개 시상 직렬 ① ② ③ ④ ⑤ ── */
+        .ag {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .aw {
+            flex: 1;
+            border-bottom: 1px solid var(--bdr);
+            padding: 4px 24px;
+            /* 내부 패딩 최소화하여 간격 축소 느낌 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* fill vertical space nicely */
+            background: var(--white);
+        }
+
+        .aw:nth-child(even) {
+            background: var(--card);
+        }
+
+        .aw:last-child {
+            border-bottom: none;
+        }
+
+        /* ★ 섹션 타이틀 (크기 대폭 증가) ★ */
+        .al {
+            font-size: 18px;
+            /* 타이틀 18px로 크게 */
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--red);
+            margin-bottom: 6px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .al-desc {
+            font-size: 11.5px;
+            color: var(--gray);
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        /* 설명도 키움 */
+        .ntag {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 2px 7px;
+            margin-right: 5px;
+            letter-spacing: 0;
+            vertical-align: middle;
+            position: relative;
+            top: -2px;
+        }
+
+        /* tier boxes */
+        .t4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-bottom: 6px;
+        }
+
+        .t5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin-bottom: 6px;
+        }
+
+        .tc {
+            border: 1.5px solid var(--bdr);
+            padding: 7px 4px;
+            text-align: center;
+            background: var(--surf);
+            position: relative;
+        }
+
+        .tc.done {
+            background: #FFF5F4;
+            border-color: var(--red);
+        }
+
+        .tc.active,
+        .tc.challenge {
+            background: var(--red-pale);
+            border: 2px solid var(--red);
+        }
+
+        .tct {
+            font-size: 10.5px;
+            color: var(--gray);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .tc.done .tct,
+        .tc.active .tct,
+        .tc.challenge .tct {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .tcr {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--gray-lt);
+        }
+
+        .tc.done .tcr,
+        .tc.active .tcr,
+        .tc.challenge .tcr {
+            color: var(--red);
+        }
+
+        .tck {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            font-size: 11px;
+            color: var(--red);
+        }
+
+        /* gauge */
+        .gi {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10.5px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+
+        .gi .gc {
+            color: var(--mid);
+            font-weight: 600;
+        }
+
+        .gi .gg {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .gt {
+            height: 6px;
+            background: var(--surf2);
+            overflow: hidden;
+            border-radius: 3px;
+        }
+
+        .gf {
+            height: 100%;
+            background: linear-gradient(90deg, var(--red-dark), var(--red));
+            border-radius: 3px;
+        }
+
+        .gf.full {
+            width: 100% !important;
+        }
+
+        /* flow box */
+        .fb {
+            background: var(--surf);
+            border: 1px solid var(--bdr);
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .fs {
+            flex: 1;
+            text-align: center;
+        }
+
+        .fsl {
+            font-size: 10px;
+            color: var(--gray);
+            margin-bottom: 2px;
+        }
+
+        .fsv {
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .fsv.ok {
+            color: var(--red);
+        }
+
+        .fa {
+            width: 24px;
+            text-align: center;
+            color: var(--gray-lt);
+            font-size: 16px;
+        }
+
+        .fr {
+            flex: 1;
+            text-align: center;
+            border-left: 1px solid var(--bdr);
+            padding-left: 10px;
+        }
+
+        .frl {
+            font-size: 10px;
+            color: var(--red);
+            margin-bottom: 2px;
+        }
+
+        .frv {
+            font-size: 15px;
+            font-weight: 900;
+            color: var(--red);
+        }
+
+        /* 갭 칩 */
+        .gn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .gc2 {
+            background: var(--red-pale);
+            border: 1px solid rgba(239, 59, 36, .3);
+            padding: 4px 9px;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--red);
+            white-space: nowrap;
+        }
+
+        .gd {
+            font-size: 10.5px;
+            color: var(--gray);
+        }
+
+        /* MC info */
+        .mi {
+            font-size: 10.5px;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+
+        .mi span {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .ml {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            text-align: center;
+            font-size: 10px;
+            color: var(--gray-lt);
+            margin-top: 4px;
+        }
+
+        /* ── RIGHT ── */
+        .right {
+            overflow: hidden;
+            background: var(--surf);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .right img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="hd">
+        <img class="ci-img" src="{{ ci_src }}" alt="메리츠화재">
+        <div class="hd-c">
+            <div class="hd-title">2월 3주차 <span>메리츠화재</span> 시상현황</div>
+            <div class="hd-sub">FEBRUARY · WEEK 3 · PARTNER INCENTIVE DASHBOARD</div>
+        </div>
+        <div class="hd-r">기준일<strong>{{ date_str }}</strong></div>
+    </div>
+
+    <!-- BODY -->
+    <div class="body">
+
+        <!-- ══ LEFT ══ -->
+        <div class="left">
+
+            <!-- 인적정보 + 총 시상금 -->
+            <div class="ab">
+                <div class="ab-l">
+                    <div>
+                        {% if tier_name == 'MERITZ PREMIUM' %}<span class="ttag vvip">MERITZ PREMIUM</span>
+                        {% elif tier_name == 'MERITZ GOLD' %}<span class="ttag gold">MERITZ GOLD</span>
+                        {% elif tier_name == 'MERITZ CLUB' %}<span class="ttag club">MERITZ CLUB</span>
+                        {% else %}<span class="ttag entry">MERITZ</span>{% endif %}
+                        <div class="aname">{{ agent_name }} <small>님</small></div>
+                    </div>
+                    <div class="aunit">{{ agency_name }}<br>{{ manager_name }} 매니저 &nbsp;·&nbsp; {{ org_name }}</div>
+                </div>
+                <div class="tot">
+                    <span class="tot-l">예상 총 시상금 · TOTAL</span>
+                    <div class="tot-v">{{ total_reward_str }}</div>
+                </div>
+            </div>
+
+            <!-- 실적 3칸 (③ 정규시상 통합) -->
+            <div class="pr">
+                <div class="pc">
+                    <span class="pl">2월 인정실적 (100% 정률시상)</span>
+                    <div class="preg">{{ reg_reward_str }}</div>
+                    <span class="preg-sub">인정실적 {{ perf_k_str }} 기준</span>
+                </div>
+                <div class="pc">
+                    <span class="pl">3주차 실적 (W열)</span>
+                    <div class="pv red">{{ perf_w_str }}</div>
+                </div>
+                <div class="pc">
+                    <span class="pl">전월 실적 · 등급</span>
+                    <span class="psub">{{ prev_k_str }} · {{ prev_tier_name }}</span>
+                </div>
+            </div>
+
+            <!-- 5개 시상 직렬 -->
+            <div class="ag">
+
+                <!-- ① -->
+                <div class="aw">
+                    <div class="al">
+                        ① 인보험 3주차 시상 100%
+                        <span class="al-desc">W열 기준 · 익월지급</span>
+                    </div>
+                    <div class="t4">
+                        {% for t in t3_tiers %}
+                        <div class="tc {{ t.state }}">
+                            {% if t.state in ['done','active'] %}<div class="tck">✓</div>{% endif %}
+                            <div class="tct">{{ t.label }}↑{% if t.state=='challenge' %} 도전{% endif %}</div>
+                            <div class="tcr">{{ t.reward_str }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="gi">
+                        <span class="gc">3주차 실적 {{ perf_w_str }}</span>
+                        {% if t3_gap_str %}<span class="gg">▲ {{ t3_next_thr_str }} 구간까지 {{ t3_gap_str }} 남음</span>
+                        {% else %}<span class="gg">✓ 최고구간 달성</span>{% endif %}
+                    </div>
+                    <div class="gt">
+                        <div class="gf {% if t3_pct>=100 %}full{% endif %}" style="width:{{ t3_pct }}%"></div>
+                    </div>
+                </div>
+
+                <!-- ② -->
+                <div class="aw">
+                    <div class="al">
+                        ② 인보험 3주차 추가시상 100%
+                        <span class="al-desc">W열 기준 · 2/19~22</span>
+                    </div>
+                    <div class="t4">
+                        {% for t in t3_tiers %}
+                        <div class="tc {{ t.state }}">
+                            {% if t.state in ['done','active'] %}<div class="tck">✓</div>{% endif %}
+                            <div class="tct">{{ t.label }}↑{% if t.state=='challenge' %} 도전{% endif %}</div>
+                            <div class="tcr">{{ t.reward_str }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="gi">
+                        <span class="gc">3주차 실적 {{ perf_w_str }}</span>
+                        {% if t3_gap_str %}<span class="gg">▲ {{ t3_next_thr_str }} 구간까지 {{ t3_gap_str }} 남음</span>
+                        {% else %}<span class="gg">✓ 최고구간 달성</span>{% endif %}
+                    </div>
+                    <div class="gt">
+                        <div class="gf {% if t3_pct>=100 %}full{% endif %}" style="width:{{ t3_pct }}%"></div>
+                    </div>
+                </div>
+
+                <!-- ③ -->
+                <div class="aw">
+                    <div class="al">
+                        ③ 2~3월 연속가동 시상 1
+                        <span class="al-desc">2월 달성 후 3/15 +10만 시 지급</span>
+                    </div>
+                    <div class="t4">
+                        {% for t in cont_tiers %}
+                        <div class="tc {{ t.state }}">
+                            {% if t.state in ['done','active'] %}<div class="tck">✓</div>{% endif %}
+                            <div class="tct">2월{{ t.label }}↑</div>
+                            <div class="tcr">{{ t.reward_str }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="fb">
+                        <div class="fs">
+                            <div class="fsl">2월 구간 (W열)</div>
+                            <div class="fsv ok">{{ perf_w_str }}</div>
+                        </div>
+                        <div class="fa">→</div>
+                        <div class="fs">
+                            <div class="fsl">3/1~15 추가달성</div>
+                            <div class="fsv">+10만원</div>
+                        </div>
+                        <div class="fa">→</div>
+                        <div class="fr">
+                            <div class="frl">예상 시상금</div>
+                            <div class="frv">{{ cont_reward_str }}</div>
+                        </div>
+                    </div>
+                    {% if cont_gap_str %}<div class="gn">
+                        <div class="gc2">잔여 {{ cont_gap_str }}</div>
+                        <div class="gd">구간 후 3/15까지 +10만 시 확보</div>
+                    </div>{% endif %}
+                    <div class="gt">
+                        <div class="gf {% if cont_pct>=100 %}full{% endif %}" style="width:{{ cont_pct }}%"></div>
+                    </div>
+                </div>
+
+                <!-- ④ -->
+                <div class="aw">
+                    <div class="al">
+                        <span class="ntag">NEW</span>④ 2~3월 연속가동 시상 2
+                        <span class="al-desc">2월 달성 후 3/8 +10만 시 지급</span>
+                    </div>
+                    <div class="t4">
+                        {% for t in cont_tiers %}
+                        <div class="tc {{ t.state }}">
+                            {% if t.state in ['done','active'] %}<div class="tck">✓</div>{% endif %}
+                            <div class="tct">2월{{ t.label }}↑</div>
+                            <div class="tcr">{{ t.reward_str }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="fb">
+                        <div class="fs">
+                            <div class="fsl">2월 구간 (W열)</div>
+                            <div class="fsv ok">{{ perf_w_str }}</div>
+                        </div>
+                        <div class="fa">→</div>
+                        <div class="fs">
+                            <div class="fsl" style="color:var(--red);font-weight:700;">3/1~8 마감주의!</div>
+                            <div class="fsv">+10만원</div>
+                        </div>
+                        <div class="fa">→</div>
+                        <div class="fr">
+                            <div class="frl">예상 시상금</div>
+                            <div class="frv">{{ cont_reward_str }}</div>
+                        </div>
+                    </div>
+                    {% if cont_gap_str %}<div class="gn">
+                        <div class="gc2">잔여 {{ cont_gap_str }}</div>
+                        <div class="gd">구간 후 3/8까지 +10만 시 확보 (마감 주의!)</div>
+                    </div>{% endif %}
+                    <div class="gt">
+                        <div class="gf {% if cont_pct>=100 %}full{% endif %}" style="width:{{ cont_pct }}%"></div>
+                    </div>
+                </div>
+
+                <!-- ⑤ -->
+                <div class="aw">
+                    <div class="al">
+                        ⑤ 메리츠클럽 PLUS+ (MC PLUS+)
+                        <span class="al-desc">1·2·3월 연속달성 · 최저구간 기준</span>
+                    </div>
+                    <div class="mi">
+                        1월 <span>{{ mcplus_jan_str }}</span> &nbsp;/&nbsp; 2월 <span>{{ mcplus_feb_str }}</span>
+                        &nbsp;→&nbsp; 시상기준 <span>{{ mcplus_base_str }}</span>
+                    </div>
+                    <div class="t5">
+                        {% for t in mcplus_tiers %}
+                        <div class="tc {{ t.state if t.state else '' }}">
+                            {% if t.state in ['done','active'] %}<div class="tck">✓</div>{% endif %}
+                            <div class="tct">{{ t.label }}↑{% if t.state in ['active','challenge'] %} ▲{% endif %}</div>
+                            <div class="tcr">{{ t.reward_str }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if mcplus_gap_str %}
+                    <div class="gn">
+                        <div class="gc2">잔여 {{ mcplus_gap_str }}</div>
+                        <div class="gd">{{ mcplus_next_thr_str }} 달성 시 {{ mcplus_next_rwd_str }} · 3월도 동일 구간 달성 필요</div>
+                    </div>
+                    {% else %}
+                    <div class="gn">
+                        <div class="gc2">✓ 최고구간</div>
+                        <div class="gd">3월 유지 시 300만원 확보</div>
+                    </div>
+                    {% endif %}
+                    <div class="gt" style="margin-bottom:3px;">
+                        <div class="gf {% if mcplus_pct>=100 %}full{% endif %}" style="width:{{ mcplus_pct }}%"></div>
+                    </div>
+                    <div class="ml">
+                        {% for t in mcplus_tiers %}
+                        <div
+                            style="{% if t.state in ['done','active','challenge'] %}color:var(--red);font-weight:700;{% endif %}">
+                            {{ t.label }}{% if t.state=='done' %} ✓{% elif t.state in ['active','challenge'] %} ▲{%
+                            endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div><!-- /ag -->
+        </div><!-- /left -->
+
+        <!-- ══ RIGHT ══ -->
+        <div class="right">
+            <img src="{{ img_src }}" alt="메리츠화재">
+        </div>
+
+    </div><!-- /body -->
+</body>
+
+</html>

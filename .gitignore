@@ -1,0 +1,29 @@
+# Ignore all images
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Ignore data files
+*.xlsx
+*.csv
+*.json
+*.txt
+
+# Ignore output directories
+output/
+output_test/
+
+# Ignore Python cache and env
+__pycache__/
+.venv/
+env/
+venv/
+*.pyc
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Keep specific needed files even if extension matches (if any relevant, none for now)
+!requirements.txt
